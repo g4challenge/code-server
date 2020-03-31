@@ -1,0 +1,45 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f vscode_server/docker-compose.yaml
+    kompose.version: 1.20.0 (f3d54d784)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: code-server
+  name: code-server
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f vscode_server/docker-compose.yaml
+        kompose.version: 1.20.0 (f3d54d784)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: code-server
+    spec:
+      containers:
+      - env:
+        - name: GFRsGG9YZCE5qe
+        image: codercom/code-server
+        name: code-server
+        ports:
+        - containerPort: 8080
+        resources: {}
+        volumeMounts:
+        - mountPath: /home/coder/project
+          name: code-server-claim0
+        - mountPath: /home/coder/.local/share/code-server
+          name: code-server-claim1
+      restartPolicy: Always
+      volumes:
+      - name: code-server-claim0
+        persistentVolumeClaim:
+          claimName: code-server-claim0
+      - name: code-server-claim1
+        persistentVolumeClaim:
+          claimName: code-server-claim1
+status: {}
